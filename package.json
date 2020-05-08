@@ -1,0 +1,28 @@
+{
+  "name": "footballapp",
+  "version": "1.0.0",
+  "description": "This is a football (soccer) Prediction and win app built in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michionist/FootballApp.git"
+  },
+  "keywords": [
+    "betting",
+    "soccer",
+    "football",
+    "bookie",
+    "punter",
+    "bookmaker",
+    "predict-and-win"
+  ],
+  "author": "michionist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michionist/FootballApp/issues"
+  },
+  "homepage": "https://github.com/michionist/FootballApp#readme"
+}
