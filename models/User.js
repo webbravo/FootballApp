@@ -1,6 +1,10 @@
 const connection = require("./connection");
 const Sequelize = require("sequelize");
 
+// Import model for Assications
+const Transactions = require('./Transactions');
+const Subscriber = require('./Transactions');
+
 const User = connection.define("user", {
     id: {
         primaryKey: true,
@@ -128,7 +132,6 @@ const User = connection.define("user", {
     isAdmin: Sequelize.TINYINT,
 
     status: Sequelize.TINYINT
-
 
 });
 

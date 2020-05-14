@@ -6,7 +6,9 @@ const User = require("./models/User");
 const app = express();
 
 
-// Create User Table
+// Setup the API
+// require("./api/index")
+require("./api")(app);
 
 
 app.get("/", (req, res) => {
