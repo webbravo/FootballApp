@@ -1,146 +1,141 @@
-const connection = require("./connection");
-const Sequelize = require("sequelize");
+'use strict';
 
-// Import model for Assications
-const Transactions = require('./Transactions');
-const Subscriber = require('./Transactions');
+module.exports = (sequelize, DataTypes) => {
 
-const User = connection.define("user", {
-    id: {
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-    },
-    email: {
-        type: Sequelize.STRING,
-        validate: {
-            isEmail: true,
+    const User = sequelize.define("User", {
+        id: {
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
         },
-        allowNull: false
-    },
-    password: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlphanumeric: true,
+        email: {
+            type: DataTypes.STRING,
+            validate: {
+                isEmail: true,
+            },
+            allowNull: false,
+            unique: true,
         },
-        allowNull: false
-    },
-    username: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlphanumeric: true
+        password: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true,
+            },
+            allowNull: false,
         },
-        allowNull: false
-    },
-    phone: {
-        type: Sequelize.NUMBER,
-        validate: {
-            isNumeric: true,
-            len: [11, 14]
+        username: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true,
+            },
+            allowNull: false,
+            unique: true,
         },
-        allowNull: false
-    },
+        phone: {
+            type: DataTypes.NUMBER,
+            validate: {
+                isNumeric: true,
+                len: [11, 14],
+            },
+            allowNull: false,
+            unique: true,
+        },
 
-    firstName: {
-        type: Sequelize.STRING,
-        validate: {
-            len: [4, 24],
-            isAlpha: true
-        }
-    },
-    lastName: {
-        type: Sequelize.STRING,
-        validate: {
-            len: [4, 34],
-            isAlpha: true
-        }
-    },
+        firstName: {
+            type: DataTypes.STRING,
+            validate: {
+                len: [4, 24],
+                isAlpha: true,
+            },
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            validate: {
+                len: [4, 34],
+                isAlpha: true,
+            },
+        },
 
-    gender: {
-        type: Sequelize.STRING,
-        validate: {
-            len: [4, 6],
-            isAlpha: true
-        }
-    },
+        gender: {
+            type: DataTypes.STRING,
+            validate: {
+                len: [4, 6],
+                isAlpha: true,
+            },
+        },
 
-    country: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlpha: true,
-            len: [4, 46]
-        }
-    },
+        country: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 46],
+            },
+        },
 
-    city: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlpha: true,
-            len: [3, 30]
-        }
-    },
+        city: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [3, 30],
+            },
+        },
 
-    address: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlphanumeric: true,
-            len: [3, 230]
-        }
-    },
+        address: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true,
+                len: [3, 230],
+            },
+        },
 
-    bankAccount: {
-        type: Sequelize.NUMBER,
-        validate: {
-            isNumeric: true,
-            len: [10, 11]
-        }
-    },
+        bankAccount: {
+            type: DataTypes.NUMBER,
+            validate: {
+                isNumeric: true,
+                len: [10, 11],
+            },
+            unique: true,
+        },
 
-    bankAccountType: {
-        type: Sequelize.STRING
-    },
+        bankAccountType: {
+            type: DataTypes.STRING,
+        },
 
-    bankName: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlpha: true
-        }
-    },
+        bankName: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+            },
+        },
 
-    dobMonth: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlpha: true
-        }
-    },
+        dobMonth: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+            },
+        },
 
-    dobDay: {
-        type: Sequelize.NUMBER,
-        validate: {
-            isNumeric: true,
-            len: [1, 2]
-        }
-    },
+        dobDay: {
+            type: DataTypes.NUMBER,
+            validate: {
+                isNumeric: true,
+                len: [1, 2],
+            },
+        },
 
-    dobYear: {
-        type: Sequelize.NUMBER,
-        validate: {
-            len: [4, 4]
-        }
-    },
+        dobYear: {
+            type: DataTypes.NUMBER,
+            validate: {
+                len: [4, 4],
+            },
+        },
 
-    isAdmin: Sequelize.TINYINT,
+        isAdmin: DataTypes.TINYINT,
 
-    status: Sequelize.TINYINT
+        status: DataTypes.TINYINT,
+    });
 
-});
 
-// User.associate = (models) => {
-//     models.User.belongsToMany(models.Book, {
-//         as: 'Reading',
-//         through: 'ReadingList'
-//     });
-//     models.User.hasOne(models.Favorite);
-// };
+    return User;
 
-module.exports = User;
+};
