@@ -13,7 +13,7 @@ db.sequelize.sync({
 }).then(() => {
     const server = app.listen(app.get("port"), () => {
         console.debug(
-            `Connected & Express Serving on → PORT http://127.0.0.1:${
+            `Connected & Express is Serving on → PORT http://127.0.0.1:${
       server.address().port
     }`
         );

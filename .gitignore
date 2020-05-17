@@ -17,3 +17,6 @@ logs
 
 # Mac OS DIR
 .DS_store
+
+# SQLite DB
+db.sqlite
