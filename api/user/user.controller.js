@@ -1,8 +1,8 @@
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 exports.welcome = (req, res) => {
-    res.send("Hey! User welcome back")
-}
+    res.send("Hey! User welcome back");
+};
 
 exports.allUser = async (req, res) => {
     try {
@@ -10,15 +10,12 @@ exports.allUser = async (req, res) => {
         console.log(users);
         res.status(200).json(users);
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 };
 
 exports.addUser = (req, res) => {
-    res.status(200).send("User added!")
-}
+    res.status(200).send("User added!");
+};
 
-
-exports.create = async (req, res) => {
-
-}
+exports.create = async (req, res) => {};

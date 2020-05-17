@@ -1,55 +1,60 @@
-const Sequelize = require('sequelize');
-const connection = require('./connection');
-const User = require('./User');
+'use strict';
 
-const Transactions = connection.define("transactions", {
-    id: {
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
-    },
-
-    refId: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlphanumeric: true
+module.exports = (sequelize, DataTypes) => {
+    const Transactions = sequelize.define("Transactions", {
+        id: {
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         },
-        allowNull: false,
-    },
 
-    amount: {
-        type: Sequelize.NUMBER,
-        validate: {
-            isNumeric: true,
-            len: [1, 4]
+        refId: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true
+            },
+            allowNull: false,
         },
-        allowNull: false
-    },
-    balance: {
-        type: Sequelize.NUMBER,
-        validate: {
-            isNumeric: true,
-            len: [1, 4]
+
+        amount: {
+            type: DataTypes.NUMBER,
+            validate: {
+                isNumeric: true,
+                len: [1, 4]
+            },
+            allowNull: false
         },
-        allowNull: false
-    },
-
-    remark: {
-        type: Sequelize.STRING,
-        validate: {
-            isAlphanumeric: true,
-            len: [4, 60],
+        balance: {
+            type: DataTypes.NUMBER,
+            validate: {
+                isNumeric: true,
+                len: [1, 4]
+            },
+            allowNull: false
         },
-        allowNull: false
-    },
-    transactionType: Sequelize.TINYINT,
-    status: Sequelize.STRING,
-    date: Sequelize.DATE,
 
-});
+        remark: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true,
+                len: [4, 60],
+            },
+            allowNull: false
+        },
+        transactionType: DataTypes.TINYINT,
+        status: DataTypes.STRING,
+        date: DataTypes.DATE,
 
-Transactions.belongsTo(User);
+    });
+
+    // Transactions.belongsTo(User);
+    Transactions.associate = (models) => {
+        models.Transactions.belongsTo(models.User, {
+            foreignKey: "userId"
+        });
+    };
 
 
+    return Transactions;
 
-module.exports = Transaction;
+};
