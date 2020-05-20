@@ -132,7 +132,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false
     },
-
     likes: {
       type: DataTypes.NUMBER,
       validate: {
@@ -142,7 +141,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 1
     },
-
     status: {
       type: DataTypes.STRING,
       validate: {
