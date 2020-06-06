@@ -20,3 +20,6 @@ logs
 
 # SQLite DB
 db.sqlite
+
+# SQL files
+models/*.sql
