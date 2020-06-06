@@ -39,8 +39,6 @@ exports.getByTeamId = async (req, res) => {
 };
 
 
-
-
 // Get by live games Fixture id
 exports.getByFixtureId = async (req, res) => {
 

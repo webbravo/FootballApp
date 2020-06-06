@@ -3,6 +3,8 @@ const controller = require('./games.controller');
 const router = express.Router();
 
 
+// TODO: Implement Redis Caching
+
 // Get all games for today date
 router.get("/", controller.getByDate);
 
