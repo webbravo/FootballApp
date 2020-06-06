@@ -2,11 +2,11 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-  const BetHistory = sequelize.define("BetHistory", {
+  const Bet = sequelize.define("Bet", {
     id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      autoIncrement: true
     },
 
     leagueId: {
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 10],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     fixtureId: {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 10],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     homeTeamId: {
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 10],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     awayTeamId: {
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 10],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     oddLabelId: {
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 10],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     oddLabelName: {
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
         isAlphanumeric: true,
         notNull: true,
       },
-      allowNull: false,
+      allowNull: false
     },
 
     eventTimeStamp: {
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: true,
         notNull: true,
       },
-      allowNull: false,
+      allowNull: false
     },
 
     firstHalfStart: {
@@ -83,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: true,
         notNull: true,
       },
-      allowNull: false,
+      allowNull: false
     },
 
     secondHalfStart: {
@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: true,
         notNull: true,
       },
-      allowNull: false,
+      allowNull: false
     },
 
     elasped: {
@@ -102,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [2, 3],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     value: {
@@ -111,7 +111,7 @@ module.exports = (sequelize, DataTypes) => {
         isAlphanumeric: true,
         notNull: true,
       },
-      allowNull: false,
+      allowNull: false
     },
 
     odd: {
@@ -130,7 +130,16 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [8, 9],
       },
+      allowNull: false
+    },
+    likes: {
+      type: DataTypes.NUMBER,
+      validate: {
+        isNumeric: true,
+        notNull: true,
+      },
       allowNull: false,
+      defaultValue: 1
     },
     status: {
       type: DataTypes.STRING,
@@ -139,7 +148,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true,
         len: [3, 60],
       },
-      allowNull: false,
+      allowNull: false
     },
 
     won: DataTypes.TINYINT,
@@ -147,13 +156,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
 
-  BetHistory.associate = (models) => {
-    models.BetHistory.belongsTo(models.User, {
+  Bet.associate = (models) => {
+    models.Bet.belongsTo(models.User, {
       foreignKey: "userId"
     });
   };
 
 
-  return BetHistory;
+  return Bet;
 
 };

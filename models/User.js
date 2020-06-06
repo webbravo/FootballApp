@@ -132,7 +132,10 @@ module.exports = (sequelize, DataTypes) => {
 
         isAdmin: DataTypes.TINYINT,
 
-        status: DataTypes.TINYINT,
+        status: {
+            type: DataTypes.TINYINT,
+            defaultValue: 1
+        }
     });
 
 
