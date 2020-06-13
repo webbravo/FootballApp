@@ -1,3 +1,7 @@
+const {
+    hash,
+    compare
+} = require('bcryptjs');
 const User = require("../../models/connection").User;
 const {
     body
@@ -22,25 +26,57 @@ exports.all = async (req, res) => {
     }
 };
 
-exports.create = (req, res) => {
+
+const checkForUsers = async (email) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        });
+        return (!user.dataValues) ? false : true;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+exports.create = async (req, res) => {
 
     const user = req.body;
 
-    User.create(user)
-        .then((user) => {
-            res.status(200).send(user);
-        })
-        .catch((err) => {
-            res.status(404).json({
-                [err.fields]: {
-                    "message": err.errors[0].message,
-                    "value": err.errors[0].value
-                }
+    try {
+        // 1. Check if user already exists
+        if (await checkForUsers(user.email) === true)
+            throw new Error('User already exist');
+
+        // 2. Hash password
+        const hashedPassword = await hash(user.password, 10);
+        user.password = hashedPassword;
+
+        // 3. Insert into Database
+        User.create(user)
+            .then((user) => {
+                // 4. Send Notification
+                res.status(200).send(user);
             })
+            .catch((err) => {
+                res.status(404).json({
+                    [err.fields]: {
+                        "message": err.errors[0].message,
+                        "value": err.errors[0].value
+                    }
+                })
 
-        });
+            });
 
+    } catch (err) {
+        res.status(404).json({
+            "error": `${err.message}`
+        })
+    }
 };
+
 
 // Get user by id from DB
 exports.findById = async (req, res) => {
@@ -58,6 +94,13 @@ exports.findById = async (req, res) => {
     }
 };
 
+exports.login = async (req, res) => {
+    const {
+        email,
+        password
+    } = req.body;
+    res.send('Login route: ' + email);
+};
 
 // Check user by username
 exports.findByUsername = async (req, res) => {
@@ -76,7 +119,7 @@ exports.findByUsername = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const user = await User.update(req.body , {
+        const user = await User.update(req.body, {
             returning: true,
             where: {
                 id: req.params.id
@@ -90,18 +133,18 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const user = await User.update({status: 0}, {
+        const user = await User.update({
+            status: 0
+        }, {
             returning: true,
             where: {
                 id: req.params.id
             }
         });
-        res.status(200).json({message: "Deleted"});
+        res.status(200).json({
+            message: "Deleted"
+        });
     } catch (error) {
         console.error(error);
     }
 };
-
-
-
-exports.create = async (req, res) => {};

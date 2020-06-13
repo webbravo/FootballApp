@@ -1,5 +1,4 @@
-const axios = require('axios');
-const moment = require('moment');
+const cache = require('../../middlewares/redis-cache');
 
 // Get live games for today's date
 exports.getByDate = async (req, res) => {
@@ -12,6 +11,12 @@ exports.getByDate = async (req, res) => {
 
    // Make the request for matches
    const matches = await request(url);
+
+   // Cache the result from Matches
+   cache.set({
+      "key": todayDate,
+      "matches": matches.api.fixtures
+   });
 
    // send back response and status code
    res.status(200).json(matches)

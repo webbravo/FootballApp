@@ -80,8 +80,6 @@ module.exports = {
         // }).withMessage("Password don't Match")
     ],
 
-
-
     sanitizeURLParams: [
         sanitizeParam('id').escape().trim().toInt()
     ]
