@@ -11,10 +11,16 @@ router.get("/", controller.all);
 router.post("/", validation.addUser, controller.create);
 
 // login a user
-router.post("/login", controller.login)
+router.post("/login", validation.loginUser, controller.login);
+
+// logout a user
+router.post("/logout", controller.logout)
 
 // Display a welcome message
 router.get("/welcome", controller.welcome);
+
+// Protected Route
+router.post("/protected", controller.protected);
 
 // Get user by username
 router.get("/:username", controller.findByUsername);
@@ -27,6 +33,10 @@ router.get("/id/:id", controller.findById);
 
 //  Delete user record
 router.delete("/:id", controller.delete);
+
+// Get Refresh Token
+router.post('/refresh_token', controller.refreshtoken);
+
 
 // Permanently Delete user record
 // router.delete("/final/:id", controller.delete);

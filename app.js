@@ -22,14 +22,14 @@ app.use(bodyParser.json())
 // Will handle text/plain requests
 app.use(bodyParser.text());
 
-// // Setup CORS
-// app.use(require('cors')({
-//     origin: 'http://localhost:3000',
-//     credentials: true
-// }));
+// Setup CORS
+app.use(require('cors')({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
-// // Use express middleware for easier cookie handling
-// app.use(require("cookie-parser")());
+// Use express middleware for easier cookie handling
+app.use(require("cookie-parser")());
 
 // Setup the API
 require("./api")(app);

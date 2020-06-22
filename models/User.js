@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
+
         phone: {
             type: DataTypes.NUMBER,
             validate: {
@@ -127,6 +128,22 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         isAdmin: DataTypes.TINYINT,
+
+        refreshToken: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 60]
+            }
+        },
+
+        resetPasswordToken: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 20]
+            }
+        },
 
         status: {
             type: DataTypes.TINYINT,
