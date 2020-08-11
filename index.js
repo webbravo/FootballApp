@@ -1,14 +1,30 @@
-const app = require("./app");
-const db = require("./models/connection");
-const redis = require("redis");
-
 // import environmental variables from our variables.env file
 require("dotenv").config({
     path: ".env",
 });
-app.set("REDIS_PORT", process.env.REDIS_PORT || 6379);
 
-const client = redis.createClient(app.get("REDIS_PORT"));
+
+const app = require("./app");
+const db = require("./models/connection");
+
+
+// this matches all routes and all methods
+app.use((req, res, next) => {
+    res.status(404).send({
+        status: 404,
+        error: "Not found"
+    });
+});
+
+// error handler middleware
+app.use((error, req, res, next) => {
+    res.status(error.status || 500).send({
+        error: {
+            status: error.status || 500,
+            message: error.message || "Internal Server Error",
+        },
+    });
+});
 
 app.set("port", process.env.PORT || 8600);
 

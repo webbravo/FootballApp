@@ -80,7 +80,20 @@ module.exports = {
         // }).withMessage("Password don't Match")
     ],
 
-
+    loginUser: [
+        body('email')
+        .isEmpty({
+            ignore_whitespace: false
+        }).withMessage("No email address")
+        .trim()
+        .escape()
+        .isLength({
+            min: 4
+        }).withMessage("Email is too long!")
+        .isEmail({
+            domain_specific_validation: true
+        }).withMessage("Enter a valid email address")
+    ],
 
     sanitizeURLParams: [
         sanitizeParam('id').escape().trim().toInt()

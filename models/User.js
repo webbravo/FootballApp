@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING,
-            validate: {
-                isAlphanumeric: true,
-            },
             allowNull: false,
         },
         username: {
@@ -31,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
+
         phone: {
             type: DataTypes.NUMBER,
             validate: {
@@ -44,15 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         firstName: {
             type: DataTypes.STRING,
             validate: {
-                len: [4, 24],
+                len: [2, 24],
                 isAlpha: true,
             },
         },
         lastName: {
             type: DataTypes.STRING,
             validate: {
-                len: [4, 34],
-                isAlpha: true,
+                len: [4, 34]
             },
         },
 
@@ -131,6 +128,22 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         isAdmin: DataTypes.TINYINT,
+
+        refreshToken: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 60]
+            }
+        },
+
+        resetPasswordToken: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 20]
+            }
+        },
 
         status: {
             type: DataTypes.TINYINT,
