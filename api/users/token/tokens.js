@@ -4,20 +4,31 @@ const {
 
 // Create tokens
 // ----------------------------------
-const createAccessToken = userId => {
+const createAccessToken = user => {
     return sign({
-        userId
+        sub: user._id,
+        email: user.email,
+        role: user.role,
+        iss: 'api.10dPredict',
+        aud: 'api.10dPredict'
     }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '15m',
+        algorithm: 'HS256',
+        expiresIn: '30m',
     });
 };
 
-const createRefreshToken = userId => {
+const createRefreshToken = user => {
     return sign({
-        userId
-    }, process.env.REFRESH_TOKEN_SECRET, {
+        sub: user._id,
+        email: user.email,
+        role: user.role,
+        iss: 'api.10dPredict',
+        aud: 'api.10dPredict'
+    }, process.env.ACCESS_TOKEN_SECRET, {
+        algorithm: 'HS256',
         expiresIn: '7d',
     });
+
 };
 
 // Send tokens

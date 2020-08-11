@@ -14,10 +14,7 @@ const {
     sendAccessToken,
 } = require("./token/tokens");
 
-const {
-    isAuth
-} = require('./isAuth.js');
-
+const jwtDecode = require("jwt-decode");
 const User = require("../../models/connection").User;
 const notification = require("../notification/email");
 const updateRefreshToken = require("./updateRefreshToken");
@@ -69,7 +66,7 @@ exports.create = async (req, res) => {
         // 3. Insert into Database
         User.create(user)
             .then((user) => {
-                // 4. Send Notification (Sign)
+                // 4. Se nd Notification (Sign)
                 //    notification.email(user.email, "signup");
                 res.status(200).send(user);
             })
@@ -82,13 +79,13 @@ exports.create = async (req, res) => {
                 });
             });
     } catch (err) {
-        res.status(404).json({
+        res.status(400).json({
             error: `${err.message}`,
         });
     }
 };
 
-// Get user by id from DB
+// Get user by ID
 exports.findById = async (req, res) => {
     try {
         const user = await User.findOne({
@@ -104,29 +101,57 @@ exports.findById = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+
+// Get protected user
+exports.findByIdP = async (req, res) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                id: req.userId,
+                status: 1,
+            },
+        });
+        console.log(req.params.id);
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+//  Authenticate a user
+exports.authenticate = async (req, res) => {
     try {
         const {
             email,
             password
         } = req.body;
 
-
         // 0. Check if Email and password was entered
         if (!email || !password)
             throw new Error('Enter Email address and Password');
 
         // 1. Find user in array. If not exist send error
+        // (TODO: Email address and Password Incorret )
         const user = await findByEmail(email);
-        if (!user) throw new Error("User does not exist");
+        if (!user) {
+            return res.status(403).json({
+                message: "Wrong email or password.",
+            });
+        };
 
         // 2. Compare encrypted password and see if it checks out. Send error if not
         const valid = await compare(password, user.password);
-        if (!valid) throw new Error("Password not correct");
+        if (!valid) {
+            return res.status(403).json({
+                message: "Password not correct",
+            });
+        };
 
         // 3. Create Refresh-and Accesstoken
-        const accessToken = createAccessToken(user.id);
-        const refreshToken = createRefreshToken(user.id);
+        const accessToken = createAccessToken(user);
+        const refreshToken = createRefreshToken(user);
 
         // 4. Update the Refresh Token in the database
         updateRefreshToken("refreshToken", user.id)
@@ -136,13 +161,18 @@ exports.login = async (req, res) => {
             httpOnly: true,
             path: '/refresh_token',
         });
-        res.send({
-            accessToken,
-            email
-        });
+
+        // 6. Response to the API with user data
+        res.json({
+            "message": "Authentication successful!",
+            "token": accessToken,
+            "userInfo": user,
+            "expiresAt": jwtDecode(accessToken).exp,
+        }).status(200);
+
 
     } catch (err) {
-        res.json({
+        res.status(403).json({
             error: `${err.message}`
         });
     }
@@ -174,17 +204,13 @@ const findByEmail = async (email) => {
             },
         });
 
-        const foundUser = {
-            id: user.dataValues.id,
-            email: user.dataValues.email,
-            password: user.dataValues.password
-        };
-
         if (!user) {
-            return null;
-        } else {
-            return foundUser;
+            return false;
         }
+
+
+        return user;
+
     } catch (err) {
         console.error(err);
     }
@@ -192,8 +218,7 @@ const findByEmail = async (email) => {
 
 exports.protected = async (req, res) => {
     try {
-        const userId = isAuth(req);
-        if (userId !== null) {
+        if (req.userId !== null) {
             res.json({
                 "name": req.body.name = "Peak Milk"
             });
@@ -205,7 +230,6 @@ exports.protected = async (req, res) => {
         });
     }
 }
-
 
 // Check user by username
 exports.findByUsername = async (req, res) => {
@@ -279,7 +303,7 @@ exports.refreshtoken = async (req, res) => {
 
 
     // user exist, check if refreshtoken exist on user
-    if (user.refreshtoken !== token)
+    if (user.refreshToken !== token)
         return res.send({
             accesstoken: ''
         });
