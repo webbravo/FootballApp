@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     leagueId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     fixtureId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     homeTeamId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     awayTeamId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     oddLabelId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     eventTimeStamp: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     firstHalfStart: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     secondHalfStart: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     elasped: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,
@@ -133,7 +133,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     likes: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
         notNull: true,

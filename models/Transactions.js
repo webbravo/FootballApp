@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         amount: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             validate: {
                 isNumeric: true,
                 len: [1, 4]
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         balance: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             validate: {
                 isNumeric: true,
                 len: [1, 4]

@@ -1,5 +1,12 @@
-module.exports = (app, jwt) => {
-    app.use("/api/authenticate", require("./users/users.controller").authenticate);
+module.exports = (app, jwt, validation) => {
+
+    const controller = require("./users/users.controller");
+
+    app.use("/api/authenticate", controller.authenticate);
+
+    // Create a new users
+    app.post("/api/users/signup", validation.addUser, controller.create);
+
 
     // Set attachUser as Global MiddleWare
     app.use(attachUser);

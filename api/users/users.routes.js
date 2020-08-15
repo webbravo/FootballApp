@@ -11,8 +11,7 @@ module.exports = (checkJWT) => {
     // Get all users
     router.get("/", controller.all);
 
-    // Create a new users
-    router.post("/", validation.addUser, controller.create);
+
 
     // login a user
     router.post("/authenticate", validation.loginUser, controller.authenticate);

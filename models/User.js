@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         phone: {
             type: DataTypes.STRING,
             validate: {
-                isNumeric: true,
                 len: [11, 14],
             },
             allowNull: false,
@@ -86,12 +85,12 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         bankAccount: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             validate: {
                 isNumeric: true,
                 len: [10, 11],
             },
-            unique: true,
+            unique: true
         },
 
         bankAccountType: {
@@ -102,18 +101,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             validate: {
                 isAlpha: true,
-            },
+            }
         },
 
         dobMonth: {
             type: DataTypes.STRING,
             validate: {
                 isAlpha: true,
-            },
+            }
         },
 
         dobDay: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             validate: {
                 isNumeric: true,
                 len: [1, 2],
@@ -121,7 +120,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         dobYear: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             validate: {
                 len: [4, 4],
             },
