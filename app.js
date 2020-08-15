@@ -43,7 +43,7 @@ app.use(
 
 
 // Setup the API
-require("./api")(app, jwt, csrfProtection);
+require("./api")(app, jwt, validation, csrfProtection);
 
 app.get("/", (req, res) => {
     res.send("<h1>Hello World</h1>");
