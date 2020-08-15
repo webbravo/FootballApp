@@ -1,56 +1,55 @@
-const express = require('express');
-const controller = require('./users.controller');
-const router = express.Router();
-const validation = require('../../middlewares/validations');
-const {
-    isAuth
-} = require('../../middlewares/isAuth.js');
+module.exports = (checkJWT) => {
+
+    const express = require('express');
+    const controller = require('./users.controller');
+    const router = express.Router();
+    const validation = require('../../middlewares/validations');
+    const {
+        isAuth
+    } = require('../../middlewares/isAuth.js');
+
+    // Get all users
+    router.get("/", controller.all);
+
+    // Create a new users
+    router.post("/", validation.addUser, controller.create);
+
+    // login a user
+    router.post("/authenticate", validation.loginUser, controller.authenticate);
 
 
-// Get all users
-router.get("/", controller.all);
+    // logout a user
+    router.post("/logout", controller.logout)
 
-// Create a new users
-router.post("/", validation.addUser, controller.create);
+    // Display a welcome message
+    router.get("/welcome", controller.welcome);
 
-// login a user
-router.post("/authenticate", validation.loginUser, controller.authenticate);
+    // Protected Route
+    router.post("/protected", isAuth, controller.protected);
 
-// logout a user
-router.post("/logout", controller.logout)
+    // Protected Find User Route
+    router.post("/protected-user", isAuth, controller.findByIdP);
 
-// Display a welcome message
-router.get("/welcome", controller.welcome);
+    // Get user by username
+    router.get("/:username", controller.findByUsername);
 
-// Protected Route
-router.post("/protected", isAuth, controller.protected);
+    // Update User Record
+    router.put("/:id", controller.update)
 
-// Protected Find User Route
-router.post("/protected-user", isAuth, controller.findByIdP);
+    // Get user by id Route: @Private
+    router.get("/id/:id", controller.findById);
 
-// Get user by username
-router.get("/:username", controller.findByUsername);
+    //  Delete user record
+    router.delete("/:id", controller.delete);
 
-// Update User Record
-router.put("/:id", controller.update)
-
-// Get user by id Route: @Private
-router.get("/id/:id", controller.findById);
-
-//  Delete user record
-router.delete("/:id", controller.delete);
-
-// Get Refresh Token
-router.post('/refresh_token', controller.refreshtoken);
+    // Get Refresh Token
+    router.post('/refresh_token', controller.refreshtoken);
 
 
-// Permanently Delete user record
-// router.delete("/final/:id", controller.delete);
-
-
-
-
+    // Permanently Delete user record
+    // router.delete("/final/:id", controller.delete);
 
 
 
-module.exports = router
+    return router
+}
