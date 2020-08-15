@@ -15,21 +15,9 @@ var db = {};
 //     },
 // });
 
-// const sequelize = new Sequelize(
-//     process.env.DB_NAME,
-//     process.env.DB_USER,
-//     process.env.DB_PASS, {
-//         host: "localhost",
-//         dialect: process.env.DB_DIALECT,
-//         define: {
-//             freezeTableName: true,
-//         },
-//     }
-// );
 
 // Connect to Mysql
 const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
-    // Look to the next section for possible options
     dialect: process.env.DIALECT,
 });
 
