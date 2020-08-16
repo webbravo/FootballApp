@@ -15,6 +15,7 @@ var db = {};
 //     },
 // });
 
+console.log(process.env.DB_CONNECTION_STRING);
 
 // Connect to Mysql
 const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
