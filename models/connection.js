@@ -15,10 +15,9 @@ var db = {};
 //     },
 // });
 
-console.log(process.env.DB_CONNECTION_STRING);
 
 // Connect to Mysql
-const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
+const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, {
     dialect: process.env.DIALECT,
 });
 
