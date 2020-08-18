@@ -34,12 +34,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 // Setup CORS
-app.use(
-    require("cors")({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
-);
+
+var whitelist = ['http://localhost:3000', 'http://10dpredict.com']
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    credentials: true,
+};
+
+app.use(require("cors")(corsOptions));
+
 
 
 // Setup the API
