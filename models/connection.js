@@ -6,9 +6,7 @@ var db = {};
 
 
 // Connect to Mysql
-const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, {
-    dialect: process.env.DIALECT,
-});
+const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 
 fs.readdirSync(__dirname)
     .filter((file) => {
