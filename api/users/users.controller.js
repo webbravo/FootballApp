@@ -156,10 +156,9 @@ exports.authenticate = async (req, res) => {
         // 4. Update the Refresh Token in the database
         updateRefreshToken("refreshToken", user.id)
 
-        // 5. Send token. Refreshtoken as a cookie and accesstoken as a regular response
-        res.cookie('refreshtoken', refreshToken, {
-            httpOnly: true,
-            path: '/refresh_token',
+        // 5. Send token. AcessToken as cookie
+        res.cookie("token", token, {
+            httpOnly: true
         });
 
         // 6. Response to the API with user data
