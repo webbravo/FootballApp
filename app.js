@@ -35,7 +35,13 @@ app.use(bodyParser.text());
 
 // Setup CORS
 
-var whitelist = ['http://localhost:3000', 'http://10dpredict.com']
+var whitelist = [
+    'http://localhost',
+    "https://football-app-react-frontend.herokuapp.com",
+    'http://10dpredict.com',
+    'https://10dpredict.com'
+];
+
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
