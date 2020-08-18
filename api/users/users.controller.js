@@ -51,6 +51,65 @@ const checkForUsers = async (email) => {
     }
 };
 
+
+//  Authenticate a user
+exports.authenticate = async (req, res) => {
+    try {
+        const {
+            email,
+            password
+        } = req.body;
+
+        // 0. Check if Email and password was entered
+        if (!email || !password)
+            throw new Error('Enter Email address and Password');
+
+        // 1. Find user in array. If not exist send error
+        // (TODO: Email address and Password Incorret )
+        const user = await findByEmail(email);
+        if (!user) {
+            return res.status(403).json({
+                message: "Wrong email or password.",
+            });
+        };
+
+        // 2. Compare encrypted password and see if it checks out. Send error if not
+        const valid = await compare(password, user.password);
+        if (!valid) {
+            return res.status(403).json({
+                message: "Password not correct",
+            });
+        };
+
+        // 3. Create Refresh-and Accesstoken
+        const accessToken = createAccessToken(user);
+        const refreshToken = createRefreshToken(user);
+
+        // 4. Update the Refresh Token in the database
+        updateRefreshToken("refreshToken", user.id)
+
+        // 5. Send token. AcessToken as cookie
+        res.cookie("token", accessToken, {
+            httpOnly: true,
+            path: '/',
+        });
+
+        // 6. Response to the API with user data
+        res.json({
+            "message": "Authentication successful!",
+            "token": accessToken,
+            "userInfo": user,
+            "expiresAt": jwtDecode(accessToken).exp,
+        }).status(200);
+
+
+    } catch (err) {
+        res.status(403).json({
+            message: `${err.message}`
+        });
+    }
+};
+
 exports.create = async (req, res) => {
     const user = req.body;
 
@@ -84,7 +143,8 @@ exports.create = async (req, res) => {
 
                 // 8. Send token. AcessToken as cookie
                 res.cookie("token", accessToken, {
-                    httpOnly: true
+                    httpOnly: true,
+                    path: '/'
                 });
 
                 // 9. Send an Ok Reponse back to server
@@ -144,64 +204,6 @@ exports.findByIdP = async (req, res) => {
     }
 };
 
-
-
-//  Authenticate a user
-exports.authenticate = async (req, res) => {
-    try {
-        const {
-            email,
-            password
-        } = req.body;
-
-        // 0. Check if Email and password was entered
-        if (!email || !password)
-            throw new Error('Enter Email address and Password');
-
-        // 1. Find user in array. If not exist send error
-        // (TODO: Email address and Password Incorret )
-        const user = await findByEmail(email);
-        if (!user) {
-            return res.status(403).json({
-                message: "Wrong email or password.",
-            });
-        };
-
-        // 2. Compare encrypted password and see if it checks out. Send error if not
-        const valid = await compare(password, user.password);
-        if (!valid) {
-            return res.status(403).json({
-                message: "Password not correct",
-            });
-        };
-
-        // 3. Create Refresh-and Accesstoken
-        const accessToken = createAccessToken(user);
-        const refreshToken = createRefreshToken(user);
-
-        // 4. Update the Refresh Token in the database
-        updateRefreshToken("refreshToken", user.id)
-
-        // 5. Send token. AcessToken as cookie
-        res.cookie("token", accessToken, {
-            httpOnly: true
-        });
-
-        // 6. Response to the API with user data
-        res.json({
-            "message": "Authentication successful!",
-            "token": accessToken,
-            "userInfo": user,
-            "expiresAt": jwtDecode(accessToken).exp,
-        }).status(200);
-
-
-    } catch (err) {
-        res.status(403).json({
-            error: `${err.message}`
-        });
-    }
-};
 
 
 // 3. Logout a user
