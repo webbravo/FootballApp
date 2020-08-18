@@ -14,6 +14,7 @@ router.get("/countries", async (req, res) => {
             countries,
             leagues
         });
+
         // Cache Countries list
     } catch (err) {
         console.error(err);
@@ -36,7 +37,6 @@ router.get("/odds/league/:league_id", async (req, res) => {
 
     res.status(200).json(data.api)
 
-    // "https://api-football-v1.p.rapidapi.com/v2/odds/league/1383"
 })
 
 

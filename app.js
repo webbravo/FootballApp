@@ -52,7 +52,7 @@ app.use(require("cors")(corsOptions));
 
 
 // Setup the API
-require("./api")(app, jwt, validation, csrfProtection);
+require("./api")(app,  validation, csrfProtection);
 
 app.get("/", (req, res) => {
     res.send("<h1>Hello World</h1>");

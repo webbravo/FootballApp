@@ -1,4 +1,4 @@
-module.exports = (checkJWT) => {
+module.exports = () => {
 
     const express = require('express');
     const controller = require('./users.controller');
