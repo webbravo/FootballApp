@@ -45,7 +45,7 @@ const checkForUsers = async (email) => {
                 email,
             },
         });
-        return !user.dataValues ? false : true;
+        return !user ? false : true;
     } catch (error) {
         console.error(error);
     }
@@ -64,7 +64,9 @@ exports.create = async (req, res) => {
         user.password = hashedPassword;
 
         // 3. Set user Role
-        user.role = "user";
+        if (!user.role) {
+            user.role = "user";
+        }
 
         // 4. Set email to all lowerCase
         user.email = user.email.toLowerCase();
