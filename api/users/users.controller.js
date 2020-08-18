@@ -56,7 +56,7 @@ exports.create = async (req, res) => {
 
     try {
         // 1. Check if user already exists
-        if ((await checkForUsers(user.email.toLowerCase())) === true)
+        if ((await checkForUsers(user.email)) === true)
             throw new Error("User already exist");
 
         // 2. Hash password
@@ -67,7 +67,8 @@ exports.create = async (req, res) => {
         user.role = "user";
 
         // 4. Set email to all lowerCase
-        user.email = email.toLowerCase();
+        user.email = user.email.toLowerCase();
+
 
         // 5. Insert into Database
         User.create(user)

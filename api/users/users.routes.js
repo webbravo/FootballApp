@@ -12,7 +12,6 @@ module.exports = (checkJWT) => {
     router.get("/", controller.all);
 
 
-
     // login a user
     router.post("/authenticate", validation.loginUser, controller.authenticate);
 
