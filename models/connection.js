@@ -4,17 +4,6 @@ var Sequelize = require("sequelize");
 var basename = path.basename(__filename);
 var db = {};
 
-// // Connect to Sqlite DB
-// const sequelize = new Sequelize('db', 'user', 'pass', {
-//     host: "localhost",
-//     dialect: "sqlite",
-//     storage: "db.sqlite",
-//     operatorAliases: false,
-//     define: {
-//         freezeTableName: true,
-//     },
-// });
-
 
 // Connect to Mysql
 const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, {
