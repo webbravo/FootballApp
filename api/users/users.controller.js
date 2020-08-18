@@ -56,19 +56,42 @@ exports.create = async (req, res) => {
 
     try {
         // 1. Check if user already exists
-        if ((await checkForUsers(user.email)) === true)
+        if ((await checkForUsers(user.email.toLowerCase())) === true)
             throw new Error("User already exist");
 
         // 2. Hash password
         const hashedPassword = await hash(user.password, 10);
         user.password = hashedPassword;
 
-        // 3. Insert into Database
+        // 3. Set user Role
+        user.role = "user";
+
+        // 4. Set email to all lowerCase
+        user.email = email.toLowerCase();
+
+        // 5. Insert into Database
         User.create(user)
-            .then((user) => {
-                // 4. Se nd Notification (Sign)
+            .then(() => {
+                // 6. Send Notification (Sign)
                 //    notification.email(user.email, "signup");
-                res.status(200).send(user);
+
+                // 7. Create Token
+                const accessToken = createAccessToken(user)
+
+
+                // 8. Send token. AcessToken as cookie
+                res.cookie("token", accessToken, {
+                    httpOnly: true
+                });
+
+                // 9. Send an Ok Reponse back to server
+                res.json({
+                    "message": "Signup successful!",
+                    "token": accessToken,
+                    "userInfo": user,
+                    "expiresAt": jwtDecode(accessToken).exp,
+                }).status(200);
+
             })
             .catch((err) => {
                 res.status(404).json({
@@ -157,7 +180,7 @@ exports.authenticate = async (req, res) => {
         updateRefreshToken("refreshToken", user.id)
 
         // 5. Send token. AcessToken as cookie
-        res.cookie("token", token, {
+        res.cookie("token", accessToken, {
             httpOnly: true
         });
 

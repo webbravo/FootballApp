@@ -126,7 +126,14 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
 
-        isAdmin: DataTypes.TINYINT,
+        role: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlpha: true,
+                len: [4, 6]
+            },
+
+        },
 
         refreshToken: {
             type: DataTypes.STRING,
