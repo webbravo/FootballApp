@@ -1,7 +1,7 @@
 module.exports = (app, validation) => {
     const controller = require("./users/users.controller");
 
-    app.use("/api/users/authenticate", controller.authenticate);
+    app.post("/api/users/authenticate", controller.authenticate);
 
     // Create a new users
     app.post("/api/users/signup", validation.addUser, controller.signup);
