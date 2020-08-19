@@ -1,4 +1,4 @@
-module.exports = (app, validation) => {
+module.exports = (app, validation, csrfProtection) => {
     const controller = require("./users/users.controller");
 
     app.post("/api/users/authenticate", controller.authenticate);
@@ -11,6 +11,18 @@ module.exports = (app, validation) => {
 
     // JWT Auth Middleware to check request
     app.use(checkJWT);
+
+    //  CSRF Protection
+    app.use(csrfProtection);
+
+
+    //  CSRF Protection
+    app.get("/api/csrf-token", (req, res) => {
+        return res.json({
+            csrfToken: req.csrfToken()
+        });
+    });
+
 
     app.use("/api/users", require("./users/users.routes"));
     app.use("/api/rapidapi", require("./rapidAPI/index"));
