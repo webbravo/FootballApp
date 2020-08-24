@@ -29,23 +29,30 @@ router.get("/leagues/:country", async (req, res) => {
 });
 
 router.get("/odds/league/:league_id", async (req, res) => {
-    const id = 1383; //req.params.league_id;
+    try {
+        const id = 1383; //req.params.league_id;
+        const {
+            data
+        } = await rapidAPIFetch.get(`/odds/league/${id}`);
 
-    const {
-        data
-    } = await rapidAPIFetch.get(`/odds/league/${id}`);
-
-    res.status(200).json(data.api)
+        res.status(200).json(data.api)
+    } catch (error) {
+        console.error(err);
+    }
 
 })
 
 
 const getLeagues = async (country) => {
-    const year = "2020"
-    const {
-        data
-    } = await rapidAPIFetch.get(`/leagues/country/${country}/${year}`);
-    return data.api.leagues;
+    try {
+        const year = "2020"
+        const {
+            data
+        } = await rapidAPIFetch.get(`/leagues/country/${country}/${year}`);
+        return data.api.leagues;
+    } catch (error) {
+        console.error(err);
+    }
 }
 
 module.exports = router;

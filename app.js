@@ -4,9 +4,9 @@ const jwt = require("express-jwt");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
 const csrfProtection = csrf({
-    cookie: true,
+  cookie: true,
 });
-const validation = require('./middlewares/validations');
+const validation = require("./middlewares/validations");
 
 // Initialize Express app
 const app = express();
@@ -19,9 +19,9 @@ global.moment = require("moment");
 
 // parse application/x-www-form-urlencoded
 app.use(
-    bodyParser.urlencoded({
-        extended: false,
-    })
+  bodyParser.urlencoded({
+    extended: false,
+  })
 );
 
 // Parse Cookie from React App
@@ -36,26 +36,24 @@ app.use(bodyParser.text());
 // Setup CORS
 
 var whitelist = [
-    "http://localhost:6700",
-    "https://football-app-react-frontend.herokuapp.com",
-    'http://10dpredict.com',
-    'https://10dpredict.com'
+  "http://localhost:6700",
+  "https://football-app-react-frontend.herokuapp.com",
+  "http://10dpredict.com",
+  "https://10dpredict.com",
 ];
 
 var corsOptions = {
-    origin: "*",
-    credentials: true,
+  origin: "*",
+  credentials: true,
 };
 
 app.use(require("cors")(corsOptions));
 
-
-
 // Setup the API
-require("./api")(app,  validation, csrfProtection);
+require("./api")(app, validation, csrfProtection);
 
 app.get("/", (req, res) => {
-    res.send("<h1>Hello World</h1>");
+  res.send("<h1>Hello World</h1>");
 });
 
 // Export app module
