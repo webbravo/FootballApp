@@ -1,5 +1,12 @@
 const User = require("../../models/connection").User;
 
+
+
+exports.welcome = (req, res) => {
+  res.send("Welcome to Prediction Route, it Controllers user prediction history")
+};
+
+
 exports.all = async (req, res) => {
   try {
     const users = await User.findAll({

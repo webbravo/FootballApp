@@ -6,7 +6,7 @@ const client = redis.createClient(REDIS_PORT);
 
 exports.set = (data) => {
     // Set data to Redis
-    client.setex(data.key, 3600, JSON.stringify(data.matches));
+    client.setex(data.key, 3600, JSON.stringify(data.data));
     return;
 }
 
@@ -16,14 +16,17 @@ exports.get = (req, res, next) => {
     const todayDate = moment().format("YYYY-MM-DD");
 
     const {
-        id
+        id,
+        country,
+        league_id,
+        fixture_id
     } = req.params;
 
-    client.get(id || todayDate, (err, matches) => {
+    client.get(id || country || league_id || fixture_id || todayDate, (err, payload) => {
         if (err) throw err;
 
-        if (matches !== null) {
-            res.status(202).json(JSON.parse(matches));
+        if (payload !== null) {
+            res.status(202).json(JSON.parse(payload));
         } else {
             next();
         }
