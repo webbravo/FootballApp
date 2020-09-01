@@ -1,7 +1,7 @@
 module.exports = [{
-        country: "England",
-        code: "GB",
-        flag: "https://media.api-sports.io/flags/gb.svg"
+        country: "Australia",
+        code: "AU",
+        flag: "https://media.api-sports.io/flags/au.svg"
     },
     {
         country: "Albania",
