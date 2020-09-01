@@ -25,10 +25,10 @@ module.exports = (app, validation, csrfProtection) => {
 
 
     app.use("/api/users", require("./users/users.routes"));
-    app.use("/api/rapidapi", require("./rapidAPI/index"));
 
-    app.use("/api/live-games", require("./liveGames/games.routes"));
-    app.use("/api/prediction", require("./liveGames/games.routes"));
+    app.use("/api/rapidapi", require("./rapidAPI/api.routes"));
+
+    app.use("/api/prediction", require("./predictions/prediction.routes"));
 };
 
 // JWT Auth Middleware
