@@ -13,7 +13,11 @@ module.exports = (app, validation, csrfProtection) => {
     app.use(checkJWT);
 
     //  CSRF Protection
+<<<<<<< HEAD
     // app.use(csrfProtection);
+=======
+    //app.use(csrfProtection);
+>>>>>>> origin/master
 
 
     //  CSRF Protection

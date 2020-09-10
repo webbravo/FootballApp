@@ -15,6 +15,7 @@ const {
 
 const jwtDecode = require("jwt-decode");
 const User = require("../../models/connection").User;
+const Followers = require("../../models/connection").Followers;
 const notification = require("../notification/email");
 const updateRefreshToken = require("./updateRefreshToken");
 
@@ -367,4 +368,20 @@ exports.refreshtoken = async (req, res) => {
     return res.send({
         accesstoken,
     });
+};
+
+
+
+
+exports.follow = async (req, res) => {
+
+
+    try {
+        return res.status(200).json({
+           reply: "follow route"
+        });
+    } catch (e) {
+        console.log(e);
+    }
+
 };
