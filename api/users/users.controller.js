@@ -374,5 +374,14 @@ exports.refreshtoken = async (req, res) => {
 
 
 exports.follow = async (req, res) => {
- 
+
+
+    try {
+        return res.status(200).json({
+           reply: "follow route"
+        });
+    } catch (e) {
+        console.log(e);
+    }
+
 };

@@ -28,6 +28,11 @@ module.exports = () => {
     // Protected Find User Route
     router.post("/protected-user", isAuth, controller.findByIdP);
 
+
+ 
+    // Follow a user
+    router.post("/:username/follow", controller.follow);   
+
     // Get user by username
     router.get("/:username", controller.findByUsername);
 
@@ -47,9 +52,6 @@ module.exports = () => {
     // Permanently Delete user record
     // router.delete("/final/:id", controller.delete);
 
-
-    // Follow a user
-    router.post("/follow", controller.follow);
 
 
 
