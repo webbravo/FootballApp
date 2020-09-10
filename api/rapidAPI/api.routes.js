@@ -10,7 +10,13 @@ router.get("/leagues/country/:country", cache.get, controller.getLeaguesByCountr
 
 router.get("/fixtures/league/:league_id", cache.get, controller.getFixturesFromLeagueId);
 
-router.get("/odds/fixture/:fixture_id", cache.get, controller.getOddsByFixturesId);
+router.get("/odds/fixture/:fixture_id", controller.getOddsByFixturesId);
+
+router.get("/odds/league/:league_id", cache.get, controller.getOddsByLeagueId);
+
+router.get("/fixtures/today", cache.get, controller.getFixturesForToday);
+
+router.get("/odds/today", cache.get, controller.getOddsForToday);
 
 
 
