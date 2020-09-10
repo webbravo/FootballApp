@@ -42,5 +42,10 @@ router.post('/refresh_token', controller.refreshtoken);
 // Permanently Delete user record
 // router.delete("/final/:id", controller.delete);
 
+// Get Refresh Token
+router.post('/:username/follow', async function (req, res) {
+ console.log("hiii");
+});
+
 
 module.exports = router;

@@ -150,3 +150,25 @@ const getLeagues = async (country) => {
       console.error(error);
    }
 }
+
+
+
+// Get odds by league id
+exports.getOddsByLeagueId = async (req, res) => {
+
+
+}
+
+
+//Get Odds for today
+exports.getOddsForToday = async (req, res) => {
+
+
+}
+
+// Get Fixtures for Today
+exports.getFixturesForToday = async (req, res) => {
+
+
+}
+
