@@ -29,18 +29,11 @@ router.get("/:username", controller.findByUsername);
 // Update User Record
 router.put("/:id", controller.update)
 
-<<<<<<< HEAD
 // Get user by id Route: @Private
 router.get("/id/:id", controller.findById);
-=======
+// Get user by username
+router.get("/:username", controller.findByUsername);
 
- 
-    // Follow a user
-    router.post("/:username/follow", controller.follow);   
-
-    // Get user by username
-    router.get("/:username", controller.findByUsername);
->>>>>>> origin/master
 
 //  Delete user record
 router.delete("/:id", controller.delete);
@@ -58,12 +51,6 @@ router.post('/:username/follow', async function (req, res) {
 });
 
 
-<<<<<<< HEAD
+
 module.exports = router;
-=======
 
-
-
-    return router
-}
->>>>>>> origin/master
