@@ -48,6 +48,10 @@ module.exports = () => {
     // router.delete("/final/:id", controller.delete);
 
 
+    // Follow a user
+    router.post("/follow", controller.follow);
+
+
 
     return router
 }
