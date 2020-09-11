@@ -45,11 +45,17 @@ router.post('/refresh_token', controller.refreshtoken);
 // Permanently Delete user record
 // router.delete("/final/:id", controller.delete);
 
-// Get Refresh Token
-router.post('/:username/follow', async function (req, res) {
- console.log("hiii");
-});
+// Follow user
+router.put('/:username/follow', controller.follow);
 
+// Unfollow user
+router.delete('/:username/unfollow', controller.unfollow);
+
+// Get user followers
+router.get('/:username/followers', controller.getFollowers);
+
+// Get followings
+router.get('/:username/following', controller.getFollowings);
 
 
 module.exports = router;
