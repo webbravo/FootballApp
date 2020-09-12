@@ -9,7 +9,6 @@ const {
 // Get all users
 router.get("/", controller.all);
 
-
 // logout a user
 router.post("/logout", controller.logout)
 
