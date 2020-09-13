@@ -375,6 +375,7 @@ exports.refreshtoken = async (req, res) => {
 
 
 
+
 //Follow user [author@clintonnzedimma]
 exports.follow = async (req, res) => {
     try {
@@ -604,3 +605,4 @@ exports.getFollowings = async (req, res)=> {
     }
 
 }
+
