@@ -12,7 +12,7 @@ module.exports = (app, validation, csrfProtection) => {
     // JWT Auth Middleware to check request
     app.use(checkJWT);
 
-    //  CSRF Protection
+    // //  CSRF Protection
     app.use(csrfProtection);
 
 
@@ -24,6 +24,7 @@ module.exports = (app, validation, csrfProtection) => {
     });
 
 
+    //  User Related Routes
     app.use("/api/users", require("./users/users.routes"));
 
     app.use("/api/rapidapi", require("./rapidAPI/api.routes"));
