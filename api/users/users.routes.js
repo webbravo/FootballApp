@@ -43,7 +43,7 @@ router.post('/refresh_token', controller.refreshtoken);
 
 
 module.exports = router;
-=======
+
 
 // logout a user
 router.post("/logout", controller.logout)
