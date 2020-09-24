@@ -12,7 +12,8 @@ module.exports = (app, validation, csrfProtection) => {
     // JWT Auth Middleware to check request
     app.use(checkJWT);
 
-    // //  CSRF Protection
+
+    //  CSRF Protection
     app.use(csrfProtection);
 
 

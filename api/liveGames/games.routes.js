@@ -5,7 +5,6 @@
 
 
 
-// // TODO: Implement Redis Caching
 
 // // Get all games for today date **
 // router.get("/", cache.get, controller.getByDate);
