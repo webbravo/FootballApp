@@ -56,3 +56,4 @@ router.get("/:username/followers", controller.getFollowers);
 router.get("/:username/following", controller.getFollowings);
 
 module.exports = router;
+
