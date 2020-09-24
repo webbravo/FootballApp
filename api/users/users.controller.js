@@ -69,7 +69,6 @@ exports.authenticate = async (req, res) => {
             throw new Error("Enter Email address and Password");
 
         // 1. Find user in array. If not exist send error
-        // (TODO: Email address and Password Incorret )
         const user = await findByEmail(email);
         if (!user) {
             return res.status(403).json({
