@@ -165,18 +165,19 @@ exports.getOddsByFixturesId = async (req, res) => {
          data
       } = await rapidAPIFetch.get(`/odds/fixture/${fixture_id}`);
 
-      let filteredOdds = "";
+      let filteredOdds = ""; //480588
 
-      if (data.api.odds.length > 0) {
-         filteredOdds = data.api.odds[0].bookmakers
-            .filter((bookie) => (
-               bookie.bookmaker_name === "Bet365"))[0].bets
-            .filter((bet) => {
-               return settings.outcomeToUse.includes(bet.label_name);
-            });
-      } else {
-         filteredOdds = data.api;
-      }
+      // if (data.api.results > 0) {
+      filteredOdds = data.api.odds[0].bookmakers
+         .filter((bookie) => (
+            bookie.bookmaker_name === "Bet365"))[0].bets
+         .filter((bet) => {
+            return settings.outcomeToUse.includes(bet.label_name);
+         });
+
+      // } else {
+      //    filteredOdds = data.api;
+      // }
 
       //  Cache result
       cache.set({
