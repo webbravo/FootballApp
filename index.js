@@ -22,9 +22,9 @@ app.use((error, req, res, next) => {
     });
 });
 
+// db.sequelize.sync({}).then(() => {func}).catch((err) => console.log(`Connection failed: ${err}`));
+
 app.set("port", process.env.PORT || 8600);
-
-
 const server = app.listen(app.get("port"), () => {
     console.debug(
         `Connected & Express is Serving on → PORT http://127.0.0.1:${

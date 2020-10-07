@@ -5,9 +5,11 @@ var basename = path.basename(__filename);
 var db = {};
 
 
-// Connect to Mysql
+// Connect to Remote Mysql Database
 const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 
+
+// Read all Model file to create various tables
 fs.readdirSync(__dirname)
     .filter((file) => {
         return (
@@ -28,4 +30,8 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
+
+
 module.exports = db;
+

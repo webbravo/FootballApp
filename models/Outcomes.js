@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-  const Bet = sequelize.define("Bet", {
+  const Outcomes = sequelize.define("Outcomes", {
     id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
@@ -77,32 +77,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    firstHalfStart: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: true,
-        notNull: true,
-      },
-      allowNull: false
-    },
-
-    secondHalfStart: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: true,
-        notNull: true,
-      },
-      allowNull: false
-    },
-
     elasped: {
       type: DataTypes.INTEGER,
       validate: {
         isNumeric: true,
-        notNull: true,
         len: [2, 3],
       },
-      allowNull: false
+      allowNull: true
     },
 
     value: {
@@ -123,46 +104,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
 
-    betSlipCode: {
-      type: DataTypes.STRING,
-      validate: {
-        isAlphanumeric: true,
-        notNull: true,
-        len: [8, 9],
-      },
-      allowNull: false
-    },
-    likes: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isNumeric: true,
-        notNull: true,
-      },
-      allowNull: false,
-      defaultValue: 1
-    },
-    status: {
-      type: DataTypes.STRING,
-      validate: {
-        isAlphanumeric: true,
-        notNull: true,
-        len: [3, 60],
-      },
-      allowNull: false
-    },
-
     won: DataTypes.TINYINT,
-    isPrivate: DataTypes.TINYINT,
   });
 
 
-  Bet.associate = (models) => {
-    models.Bet.belongsTo(models.User, {
-      foreignKey: "userId"
+  Outcomes.associate = (models) => {
+    models.Outcomes.belongsTo(models.Prediction, {
+      foreignKey: "slipCode"
     });
   };
 
 
-  return Bet;
+  return Outcomes;
 
 };
