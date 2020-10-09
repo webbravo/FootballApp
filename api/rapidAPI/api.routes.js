@@ -18,6 +18,8 @@ router.get("/odds/league/:league_id", controller.getOddsByLeagueId);
 
 router.get("/fixtures/today", controller.getFixturesForToday);
 
+router.get("/fixtures/today", controller.getFixturesForToday);
+
 router.get("/fixtures/league/:league_id", cache.get, controller.getFixturesFromLeagueId);
 
 

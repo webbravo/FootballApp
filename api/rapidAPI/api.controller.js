@@ -8,9 +8,6 @@ const {
 } = require("./fetch");
 
 
-exports.welcome = (req, res) => {
-   res.send("Welcome to Rapid API Route")
-};
 
 // Get live fixture for today's date
 exports.getFixturesForToday = async (req, res) => {
@@ -30,6 +27,7 @@ exports.getFixturesForToday = async (req, res) => {
 
    //  Group available league by their countries
    const leaguesAndCountry = groupLeagueByCountry(filteredMatches, "country");
+
 
    const payload = {
       results: filteredMatches.length,

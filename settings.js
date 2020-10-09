@@ -44,6 +44,7 @@ module.exports = {
         "Win Both Halves"
     ]
 }
+
 // The 10 outcomes are
 // 1. 1 x 2 -
 // 2. Both teams to score -
@@ -56,4 +57,4 @@ module.exports = {
 // 9. Most scoring half -
 // 10. Halftime/fulltime -
 // 11. Win Both Halves
-//
+
