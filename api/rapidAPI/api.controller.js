@@ -1,27 +1,91 @@
 const cache = require('../../middlewares/redis-cache');
 const countries = require('./countryList');
 const settings = require('../../settings');
+const moment = require('moment');
 
 const {
    rapidAPIFetch
 } = require("./fetch");
 
-// Get live games for today's date
-exports.getByDate = async (req, res) => {
+
+exports.welcome = (req, res) => {
+   res.send("Welcome to Rapid API Route")
+};
+
+// Get live fixture for today's date
+exports.getFixturesForToday = async (req, res) => {
+
+   // Get today's date
+   const todayDate = moment().format("YYYY-MM-DD");
+
+   // Make the request for matches
+   const {
+      data
+   } = await rapidAPIFetch.get(`/fixtures/date/${todayDate}`);
+
+
+   // Filter to return only future matches(5min before start)
+   const filteredMatches = data.api.fixtures.filter(filterMatches);
+
+
+   //  Group available league by their countries
+   const leaguesAndCountry = groupLeagueByCountry(filteredMatches, "country");
+
+   const payload = {
+      results: filteredMatches.length,
+      countries: leaguesAndCountry
+   }
+
+   // Cache the result from Matches
+   cache.set({
+      "key": todayDate,
+      "data": payload
+   });
+
+   // send back response and status code
+   res.status(200).json(payload)
+
+};
+
+//
+const groupLeagueByCountry = (list, key) => {
+   return list.reduce(function (rv, x) {
+      (rv[x["league"][key]] = rv[x["league"][key]] || []).push(x);
+      return rv;
+   }, {});
+};
+
+
+// Get the future date
+const futureDate = () => moment().unix() + (60 * settings.timeGap);
+
+// Return a list of matches to start in 5mins Time
+const filterMatches = (match) => {
+   const matchTime = match.event_timestamp;
+   return matchTime > futureDate() &&
+      match.status === "Not Started";
+}
+
+
+// Get live Odds for today's games
+exports.getOddsForToday = async (req, res) => {
+
+   // Get the bookmaker ID
+   const bookmaker = settings.bookmarker;
 
    // Get today's date
    const todayDate = moment().format("YYYY-MM-DD");
 
    // Get url
-   const url = `https://api-football-v1.p.rapidapi.com/v2/fixtures/date/${todayDate}`;
+   const url = `/odds/date/${todayDate}/bookmaker/${bookmaker}`;
 
    // Make the request for matches
-   const matches = await request(url);
+   const matches = await rapidAPIFetch.get(url);
 
    // Cache the result from Matches
    cache.set({
       "key": todayDate,
-      "matches": matches.api.fixtures
+      "data": matches.api.odds
    });
 
    // send back response and status code
@@ -30,14 +94,13 @@ exports.getByDate = async (req, res) => {
 };
 
 
-
 // Get a list of Available countries
 exports.getCountries = async (req, res) => {
+
    try {
       res.json({
          countries
       });
-
       // Cache Countries list
    } catch (err) {
       console.error(err);
@@ -61,11 +124,8 @@ exports.getLeaguesByCountry = async (req, res) => {
 };
 
 
-
 /**
  * Get Fixture from the League ID
- * /v2/fixtures/league/{league_id}/{date}"
- *
  */
 exports.getFixturesFromLeagueId = async (req, res) => {
 
@@ -92,31 +152,63 @@ exports.getFixturesFromLeagueId = async (req, res) => {
 };
 
 
-
 /**
  * Get live Odds By the Fixture ID
- * /v2/odds/fixture/{fixture_id}/bookmaker/{bookmakerid}
+ *
  */
 exports.getOddsByFixturesId = async (req, res) => {
    try {
-      const bookmaker = settings.bookmarker;
-      const fixture_id = 326087 || req.params.fixture_id;
+
+      //  Get the Fixture Id
+      const fixture_id = req.params.fixture_id || 569886;
       const {
          data
       } = await rapidAPIFetch.get(`/odds/fixture/${fixture_id}`);
 
+      let filteredOdds = "";
+
+      if (data.api.odds.length > 0) {
+         filteredOdds = data.api.odds[0].bookmakers
+            .filter((bookie) => (
+               bookie.bookmaker_name === "Bet365"))[0].bets
+            .filter((bet) => {
+               return settings.outcomeToUse.includes(bet.label_name);
+            });
+      } else {
+         filteredOdds = data.api;
+      }
+
+      //  Cache result
       cache.set({
          "key": fixture_id,
-         "data": data.api
+         "data": filteredOdds
       });
 
-      console.log(data.api);
+      res.status(200).json(filteredOdds)
+   } catch (error) {
+      console.error(error);
+   }
+
+};
+
+
+
+exports.getOddsByLeagueId = async (req, res) => {
+   try {
+      const league_id = req.params.league_id;
+      const {
+         data
+      } = await rapidAPIFetch.get(`/odds/league/${league_id}`);
+
+      cache.set({
+         "key": league_id,
+         "data": data.api
+      });
 
       res.status(200).json(data.api)
    } catch (error) {
       console.error(error);
    }
-
 };
 
 
@@ -150,25 +242,3 @@ const getLeagues = async (country) => {
       console.error(error);
    }
 }
-
-
-
-// Get odds by league id
-exports.getOddsByLeagueId = async (req, res) => {
-
-
-}
-
-
-//Get Odds for today
-exports.getOddsForToday = async (req, res) => {
-
-
-}
-
-// Get Fixtures for Today
-exports.getFixturesForToday = async (req, res) => {
-
-
-}
-

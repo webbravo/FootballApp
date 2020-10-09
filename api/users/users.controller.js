@@ -545,7 +545,7 @@ exports.unfollow = async(req, res)=> {
 }
 
 
-//Unfollow user [author@clintonnzedimma]
+//Get followers of user [author@clintonnzedimma]
 exports.getFollowers = async (req, res)=> {
     try{
         const user = await User.findOne({
@@ -575,7 +575,7 @@ exports.getFollowers = async (req, res)=> {
 }
 
 
-//Unfollow user [author@clintonnzedimma]
+//Get followings of user [author@clintonnzedimma]
 exports.getFollowings = async (req, res)=> {
     try{
         const user = await User.findOne({

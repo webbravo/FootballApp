@@ -6,7 +6,7 @@ const client = redis.createClient(REDIS_PORT);
 
 exports.set = (data) => {
     // Set data to Redis
-    client.setex(data.key, 3600, JSON.stringify(data.data));
+    client.setex(data.key, 3600 * 24, JSON.stringify(data.data));
     return;
 }
 
