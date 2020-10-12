@@ -14,8 +14,7 @@ module.exports = (app, validation, csrfProtection) => {
 
 
     //  CSRF Protection
-
-    // app.use(csrfProtection);
+    app.use(csrfProtection);
 
 
     //  CSRF Protection

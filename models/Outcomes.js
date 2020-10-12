@@ -105,8 +105,6 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     won: DataTypes.TINYINT,
-
-    
   });
 
 

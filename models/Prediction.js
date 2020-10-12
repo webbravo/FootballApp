@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isAlphanumeric: true,
-        notNull: true,
+        notNull: true
       },
        unique: true,
       allowNull: false
@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false,
       defaultValue: 0
+
     },
 
     accurate: {

@@ -14,7 +14,9 @@ const {
 } = require("./token/tokens");
 
 
-const { v4: uuidv4 } = require('uuid');
+const {
+    v4: uuidv4
+} = require('uuid');
 
 const jwtDecode = require("jwt-decode");
 const User = require("../../models/connection").User;
@@ -67,7 +69,6 @@ exports.authenticate = async (req, res) => {
             throw new Error("Enter Email address and Password");
 
         // 1. Find user in array. If not exist send error
-        // (TODO: Email address and Password Incorret )
         const user = await findByEmail(email);
         if (!user) {
             return res.status(403).json({
@@ -395,34 +396,34 @@ exports.follow = async (req, res) => {
 
 
         if (!userToFollow) {
-           return res.status(200).json({
+            return res.status(200).json({
                 message: "Invalid username",
-                msg_code: "_ERR_INVALID_USERNAME", 
-                success : false
+                msg_code: "_ERR_INVALID_USERNAME",
+                success: false
             });
         }
 
         if (!followingUser) {
             return res.status(200).json({
                 message: "Invalid followerId",
-                msg_code: "_ERR_INVALID_FOLLOWER_ID", 
-                success : false
-            });         
+                msg_code: "_ERR_INVALID_FOLLOWER_ID",
+                success: false
+            });
         }
 
         if (followingUser.id == userToFollow.id) {
             return res.status(200).json({
                 message: "User should follow another user, not he or herself",
                 msg_code: "_ERR_SELF_FOLLOW_REQUEST",
-                success : false
-            });        
+                success: false
+            });
         }
 
 
         const followExist = await Followers.findOne({
-            where : {
-                userId : userToFollow.id,
-                followerId : followingUser.id,
+            where: {
+                userId: userToFollow.id,
+                followerId: followingUser.id,
             }
         });
 
@@ -431,31 +432,31 @@ exports.follow = async (req, res) => {
                 message: `User @${followingUser.username} is following @${userToFollow.username} already`,
                 msg_code: "_ERR_REPEATED_FOLLOW_REQUEST",
                 success: false
-            });    
+            });
         }
 
 
 
 
-          let followInvoke = false;
+        let followInvoke = false;
 
-          if (followExist && followExist.status == 0) {
-               followInvoke = await Followers.update({
-                    status: 1,
-                }, {
-                    where: {
-                        userId : userToFollow.id,
-                        followerId : followingUser.id
-                    },
-                });
-            } else if (!followExist) {
-                followInvoke  = await Followers.create({
-                    id : uuidv4(),
-                    userId : userToFollow.id,
-                    followerId : followingUser.id,
-                    status : 1 
-                });
-            }      
+        if (followExist && followExist.status == 0) {
+            followInvoke = await Followers.update({
+                status: 1,
+            }, {
+                where: {
+                    userId: userToFollow.id,
+                    followerId: followingUser.id
+                },
+            });
+        } else if (!followExist) {
+            followInvoke = await Followers.create({
+                id: uuidv4(),
+                userId: userToFollow.id,
+                followerId: followingUser.id,
+                status: 1
+            });
+        }
 
 
 
@@ -463,11 +464,11 @@ exports.follow = async (req, res) => {
             return res.status(200).json({
                 message: `User @${userToFollow.username} followed`,
                 msg: "_SUCCESS_FOLLOW",
-                success :true
+                success: true
             });
         }
 
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
 
@@ -476,8 +477,8 @@ exports.follow = async (req, res) => {
 
 
 //Unfollow user [author@clintonnzedimma]
-exports.unfollow = async(req, res)=> {
-    try{
+exports.unfollow = async (req, res) => {
+    try {
         const tokenUser = jwtDecode(req.cookies.token);
 
         const userToUnFollow = await User.findOne({
@@ -485,7 +486,7 @@ exports.unfollow = async(req, res)=> {
                 username: req.params.username,
             }
         });
-        
+
         const followingUser = await User.findOne({
             where: {
                 email: tokenUser.email,
@@ -493,27 +494,27 @@ exports.unfollow = async(req, res)=> {
         });
 
 
-       if (!userToUnFollow) {
-           return res.status(200).json({
+        if (!userToUnFollow) {
+            return res.status(200).json({
                 message: "Invalid username",
-                msg_code: "_ERR_INVALID_USERNAME", 
-                success : false
+                msg_code: "_ERR_INVALID_USERNAME",
+                success: false
             });
         }
 
         if (!followingUser) {
             return res.status(200).json({
                 message: "Invalid followerId",
-                msg_code: "_ERR_INVALID_FOLLOWER_ID", 
-                success : false
-            });         
-        }    
+                msg_code: "_ERR_INVALID_FOLLOWER_ID",
+                success: false
+            });
+        }
 
 
         const followExist = await Followers.findOne({
-            where : {
-                userId : userToUnFollow.id,
-                followerId : followingUser.id,
+            where: {
+                userId: userToUnFollow.id,
+                followerId: followingUser.id,
             }
         });
 
@@ -522,33 +523,34 @@ exports.unfollow = async(req, res)=> {
                 message: `User @${followingUser.username} is not following @${userToUnFollow.username}`,
                 msg_code: "_ERR_NO_FOLLOW_RELATIONSHIP",
                 success: false
-            });   
+            });
         }
 
         const unfollowInvoke = await Followers.update({
             status: 0,
         }, {
             where: {
-                userId : userToUnFollow.id,
-                followerId : followingUser.id
+                userId: userToUnFollow.id,
+                followerId: followingUser.id
             },
         });
 
 
-    if (unfollowInvoke) return res.status(200).json({
-        message: `Unfollowed @${userToUnFollow.username}`,
-        msg_code: "_SUCCESS_UNFOLLOW",
-        success: true
-    });        
-    }catch(e){
+        if (unfollowInvoke) return res.status(200).json({
+            message: `Unfollowed @${userToUnFollow.username}`,
+            msg_code: "_SUCCESS_UNFOLLOW",
+            success: true
+        });
+    } catch (e) {
         console.log(e);
-     }
+    }
 }
 
 
-//Get followers of user [author@clintonnzedimma]
-exports.getFollowers = async (req, res)=> {
-    try{
+
+//Get the Follower of a user [author@clintonnzedimma]
+exports.getFollowers = async (req, res) => {
+    try {
         const user = await User.findOne({
             where: {
                 username: req.params.username,
@@ -558,27 +560,30 @@ exports.getFollowers = async (req, res)=> {
         if (!user) {
             return res.status(200).json({
                 message: `User @${req.params.username} does not exist`
-            });  
+            });
         }
 
         const followers = await Followers.findAll({
-            where: {userId : user.id},
+            where: {
+                userId: user.id
+            },
             include: [{
                 model: User
             }]
         });
 
-        return res.status(200).json(followers); 
+        return res.status(200).json(followers);
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 }
 
 
-//Get followings of user [author@clintonnzedimma]
-exports.getFollowings = async (req, res)=> {
-    try{
+
+//Get a list(array) of users that a user follows [author@clintonnzedimma]
+exports.getFollowings = async (req, res) => {
+    try {
         const user = await User.findOne({
             where: {
                 username: req.params.username,
@@ -588,21 +593,22 @@ exports.getFollowings = async (req, res)=> {
         if (!user) {
             return res.status(200).json({
                 message: `User @${req.params.username} does not exist`
-            });  
+            });
         }
 
         const followers = await Followers.findAll({
-            where: {followerId : user.id},
+            where: {
+                followerId: user.id
+            },
             include: [{
                 model: User
             }]
         });
 
-        return res.status(200).json(followers); 
+        return res.status(200).json(followers);
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 
 }
-
