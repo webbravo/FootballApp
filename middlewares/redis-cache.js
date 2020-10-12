@@ -7,9 +7,10 @@ const client = redis.createClient(REDIS_PORT);
 exports.set = (data) => {
     /**
      * Set data to Redis
-     * - Refreshes every one hour (60 * 60) = 3600
+     * - Refreshes every one day (3600 * 24) 
      */
-    client.setex(data.key, 3600, JSON.stringify(data.data));
+    client.setex(data.key, 3600 * 24, JSON.stringify(data.data));
+
     return;
 }
 

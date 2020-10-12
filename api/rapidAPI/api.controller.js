@@ -242,4 +242,5 @@ const getLeagues = async (country) => {
    } catch (error) {
       console.error(error);
    }
+
 }

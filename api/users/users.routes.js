@@ -13,7 +13,6 @@ router.get("/", controller.all);
 // router.delete("/final/:id", controller.delete);
 
 
-
 // logout a user
 router.post("/logout", controller.logout);
 

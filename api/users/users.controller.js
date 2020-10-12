@@ -547,6 +547,7 @@ exports.unfollow = async (req, res) => {
 }
 
 
+
 //Get the Follower of a user [author@clintonnzedimma]
 exports.getFollowers = async (req, res) => {
     try {
@@ -577,6 +578,7 @@ exports.getFollowers = async (req, res) => {
         console.log(e);
     }
 }
+
 
 
 //Get a list(array) of users that a user follows [author@clintonnzedimma]

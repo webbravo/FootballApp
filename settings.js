@@ -23,8 +23,6 @@ const bookmarkers = [{
         "name": "Bwin"
     }
 ];
-
-
 module.exports = {
     numbersOfPlayPerWeek: 4,
     numbersOfPlayPerDay: 1,
@@ -59,4 +57,4 @@ module.exports = {
 // 9. Most scoring half -
 // 10. Halftime/fulltime -
 // 11. Win Both Halves
-//
+
