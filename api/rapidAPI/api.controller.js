@@ -12,6 +12,8 @@ exports.welcome = (req, res) => {
    res.send("Welcome to Rapid API Route")
 };
 
+
+
 // Get live fixture for today's date
 exports.getFixturesForToday = async (req, res) => {
 
@@ -30,6 +32,8 @@ exports.getFixturesForToday = async (req, res) => {
 
    //  Group available league by their countries
    const leaguesAndCountry = groupLeagueByCountry(filteredMatches, "country");
+
+   // Get Odds for each Fixture
 
    const payload = {
       results: filteredMatches.length,
@@ -62,8 +66,7 @@ const futureDate = () => moment().unix() + (60 * settings.timeGap);
 // Return a list of matches to start in 5mins Time
 const filterMatches = (match) => {
    const matchTime = match.event_timestamp;
-   return matchTime > futureDate() &&
-      match.status === "Not Started";
+   return matchTime > futureDate()
 }
 
 
@@ -167,17 +170,17 @@ exports.getOddsByFixturesId = async (req, res) => {
 
       let filteredOdds = ""; //480588
 
-      // if (data.api.results > 0) {
-      filteredOdds = data.api.odds[0].bookmakers
-         .filter((bookie) => (
-            bookie.bookmaker_name === "Bet365"))[0].bets
-         .filter((bet) => {
-            return settings.outcomeToUse.includes(bet.label_name);
-         });
+      if (data.api.results > 0) {
+         filteredOdds = data.api.odds[0].bookmakers
+            .filter((bookie) => (
+               bookie.bookmaker_name === "Bet365"))[0].bets
+            .filter((bet) => {
+               return settings.outcomeToUse.includes(bet.label_name);
+            });
 
-      // } else {
-      //    filteredOdds = data.api;
-      // }
+      } else {
+         filteredOdds = data.api;
+      }
 
       //  Cache result
       cache.set({

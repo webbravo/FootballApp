@@ -1,11 +1,16 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const jwt = require("express-jwt");
 const csrf = require("csurf");
-const cookieParser = require("cookie-parser");
+
+
 const csrfProtection = csrf({
-  cookie: true,
+  cookie: {
+    httpOnly: true,
+  }
 });
+
 const validation = require("./middlewares/validations");
 
 // Initialize Express app
@@ -17,15 +22,16 @@ global.moment = require("moment");
 
 // ******* SET UP  MIDDLEWARE ********* //
 
+// Parse Cookie from React App
+app.use(cookieParser());
+
 // parse application/x-www-form-urlencoded
 app.use(
   bodyParser.urlencoded({
-    extended: false,
+    extended: true,
   })
 );
 
-// Parse Cookie from React App
-app.use(cookieParser());
 
 // parse application/json
 app.use(bodyParser.json());

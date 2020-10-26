@@ -110,11 +110,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Outcomes.associate = (models) => {
     models.Outcomes.belongsTo(models.Prediction, {
-      foreignKey: "slipCode"
+      foreignKey: "betSlipCode"
     });
   };
 
-
+  //sourcekey
   return Outcomes;
 
 };

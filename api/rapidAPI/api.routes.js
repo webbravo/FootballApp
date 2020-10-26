@@ -14,10 +14,7 @@ router.get("/odds/fixture/:fixture_id", cache.get, controller.getOddsByFixturesI
 
 router.get("/odds/today", cache.get, controller.getOddsForToday);
 
-router.get("/odds/league/:league_id", controller.getOddsByLeagueId);
-
-router.get("/fixtures/today", controller.getFixturesForToday);
-
+router.get("/fixtures/today", cache.get, controller.getFixturesForToday);
 
 router.get("/fixtures/league/:league_id", cache.get, controller.getFixturesFromLeagueId);
 

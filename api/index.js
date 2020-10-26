@@ -14,15 +14,19 @@ module.exports = (app, validation, csrfProtection) => {
 
 
     //  CSRF Protection
-    app.use(csrfProtection);
+    // app.use(csrfProtection);
 
 
     //  CSRF Protection
     app.get("/api/csrf-token", (req, res) => {
+
+        const csrfToken = req.csrfToken();
+
         return res.json({
-            csrfToken: req.csrfToken()
+            csrfToken
         });
     });
+
 
 
     //  User Related Routes
@@ -42,6 +46,8 @@ const checkJWT = require("express-jwt")({
     getToken: (req) => {
         const token = req.headers.authorization.split(' ')[1];
         return token
+
+
     }
 
 });

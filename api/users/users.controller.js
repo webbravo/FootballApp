@@ -2,7 +2,12 @@ const {
     hash,
     compare
 } = require("bcryptjs");
-
+const {
+    User
+} = require("../../models/connection");
+const {
+    Followers
+} = require("../../models/connection");
 const {
     body
 } = require("express-validator");
@@ -19,8 +24,6 @@ const {
 } = require('uuid');
 
 const jwtDecode = require("jwt-decode");
-const User = require("../../models/connection").User;
-const Followers = require("../../models/connection").Followers;
 const notification = require("../notification/email");
 const updateRefreshToken = require("./updateRefreshToken");
 
@@ -63,6 +66,7 @@ exports.authenticate = async (req, res) => {
             email,
             password
         } = req.body;
+
 
         // 0. Check if Email and password was entered
         if (!email || !password)
@@ -122,7 +126,6 @@ exports.authenticate = async (req, res) => {
 };
 
 exports.signup = async (req, res) => {
-
     try {
         const {
             email,
@@ -184,7 +187,8 @@ exports.signup = async (req, res) => {
             };
 
             res.cookie("token", token, {
-                httpOnly: true
+                httpOnly: true,
+                path: "/"
             });
 
             return res.json({
@@ -376,7 +380,6 @@ exports.refreshtoken = async (req, res) => {
 
 
 
-
 //Follow user [author@clintonnzedimma]
 exports.follow = async (req, res) => {
     try {
@@ -547,7 +550,6 @@ exports.unfollow = async (req, res) => {
 }
 
 
-
 //Get the Follower of a user [author@clintonnzedimma]
 exports.getFollowers = async (req, res) => {
     try {
@@ -578,7 +580,6 @@ exports.getFollowers = async (req, res) => {
         console.log(e);
     }
 }
-
 
 
 //Get a list(array) of users that a user follows [author@clintonnzedimma]

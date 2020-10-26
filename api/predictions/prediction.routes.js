@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     res.send("Welcome to Prediction Route")
 });
 
-router.get("/create", controller.createPrediction)
+router.post("/create", controller.createPrediction)
 
 router.get("/:slipCode", controller.getPrediction)
 
