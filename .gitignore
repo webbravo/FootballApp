@@ -23,3 +23,7 @@ db.sqlite
 
 # SQL files
 models/*.sql
+
+
+# Testing & Test folder
+tests/*.js
