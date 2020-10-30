@@ -1,3 +1,4 @@
-const notification = require('../api/notification/email');
+// const notification = require('../api/notification/email');
 
-notification.email("4natcom@gmail.com", "signup");
+// notification.email("4natcom@gmail.com", "signup");
+

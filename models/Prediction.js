@@ -1,24 +1,17 @@
 'use strict';
-
 module.exports = (sequelize, DataTypes) => {
-
   const Prediction = sequelize.define("Prediction", {
-    id: {
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true
-    },
 
-     betSlipCode: {
+    betSlipCode: {
+      primaryKey: true,
       type: DataTypes.STRING,
       validate: {
         isAlphanumeric: true,
-        notNull: true
+        notNull: true,
       },
-       unique: true,
+      unique: true,
       allowNull: false
     },
-
     likes: {
       type: DataTypes.INTEGER,
       validate: {
@@ -27,25 +20,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false,
       defaultValue: 0
-
     },
-
     accurate: {
       type: DataTypes.TINYINT,
       allowNull: true
     },
-
     isPremium: DataTypes.TINYINT,
   });
-
-
   Prediction.associate = (models) => {
     models.Prediction.belongsTo(models.User, {
       foreignKey: "userId"
     });
+    models.Prediction.hasMany(models.Outcomes, {
+      foreignKey: 'slipCode',
+      sourceKey: 'betSlipCode'
+    });
+
   };
-
-
   return Prediction;
-
 };

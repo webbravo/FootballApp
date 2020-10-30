@@ -24,12 +24,13 @@ const bookmarkers = [{
     }
 ];
 module.exports = {
-    numbersOfPlayPerWeek: 4,
+    numbersOfPlayPerWeek: 7,
     numbersOfPlayPerDay: 1,
     amountPerWin: 10 * 100,
-    lowestOdd: 1.5,
+    lowestOdd: 1.20,
     bookmarker: 8, // Bet365
     timeGap: 5,
+    numbersOfOutcomeToPlay: 10,
     outcomeToUse: [
         "Match Winner",
         "Both Teams Score",
@@ -57,4 +58,3 @@ module.exports = {
 // 9. Most scoring half -
 // 10. Halftime/fulltime -
 // 11. Win Both Halves
-
