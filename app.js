@@ -4,11 +4,10 @@ var bodyParser = require("body-parser");
 const jwt = require("express-jwt");
 const csrf = require("csurf");
 
-
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
-  }
+  },
 });
 
 const validation = require("./middlewares/validations");
@@ -32,7 +31,6 @@ app.use(
   })
 );
 
-
 // parse application/json
 app.use(bodyParser.json());
 
@@ -41,12 +39,7 @@ app.use(bodyParser.text());
 
 // Setup CORS
 
-var whitelist = [
-  "http://localhost:6700",
-  "https://football-app-react-frontend.herokuapp.com",
-  "http://10dpredict.com",
-  "https://10dpredict.com",
-];
+var whitelist = ["http://localhost:6700", "https://wepredict.herokuapp.com"];
 
 var corsOptions = {
   origin: "*",
