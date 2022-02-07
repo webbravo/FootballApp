@@ -3,6 +3,13 @@ const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const jwt = require("express-jwt");
 const csrf = require("csurf");
+const cors = require("cors");
+
+// Initialize Express app
+const app = express();
+
+// Using simple a CORS mechanism
+app.use(cors());
 
 const csrfProtection = csrf({
   cookie: {
@@ -11,9 +18,6 @@ const csrfProtection = csrf({
 });
 
 const validation = require("./middlewares/validations");
-
-// Initialize Express app
-const app = express();
 
 // Global Variables
 global.axios = require("axios");
@@ -39,14 +43,14 @@ app.use(bodyParser.text());
 
 // Setup CORS
 
-var whitelist = ["http://127.0.0.1:5000", "https://wepredict.herokuapp.com"];
+// var whitelist = ["http://127.0.0.1:5000", "https://wepredict.herokuapp.com"];
 
-var corsOptions = {
-  origin: whitelist,
-  optionsSuccessStatus: 20,
-};
+// var corsOptions = {
+//   origin: whitelist,
+//   optionsSuccessStatus: 20,
+// };
 
-app.use(require("cors")(corsOptions));
+// app.use(require("cors")(corsOptions));
 
 // Setup the API
 require("./api")(app, validation, csrfProtection);
