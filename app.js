@@ -45,7 +45,7 @@ var whitelist = [
 ];
 
 var corsOptions = {
-  origin: "*",
+  origin: whitelist,
   credentials: true,
 };
 
