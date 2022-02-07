@@ -39,7 +39,10 @@ app.use(bodyParser.text());
 
 // Setup CORS
 
-var whitelist = ["http://localhost:6700", "https://wepredict.herokuapp.com"];
+var whitelist = [
+  "http://127.0.0.1:5000",
+  "https://wepredict.herokuapp.com:57169",
+];
 
 var corsOptions = {
   origin: "*",
