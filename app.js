@@ -5,6 +5,9 @@ const jwt = require("express-jwt");
 const csrf = require("csurf");
 const cors = require("cors");
 
+// Initialize Express app
+const app = express();
+
 // Using simple a CORS mechanism
 app.use(cors());
 
@@ -15,9 +18,6 @@ const csrfProtection = csrf({
 });
 
 const validation = require("./middlewares/validations");
-
-// Initialize Express app
-const app = express();
 
 // Global Variables
 global.axios = require("axios");
@@ -50,7 +50,7 @@ app.use(bodyParser.text());
 //   optionsSuccessStatus: 20,
 // };
 
-app.use(require("cors")(corsOptions));
+// app.use(require("cors")(corsOptions));
 
 // Setup the API
 require("./api")(app, validation, csrfProtection);
