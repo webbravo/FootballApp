@@ -9,7 +9,6 @@ const cors = require("cors");
 const app = express();
 
 // Using simple a CORS mechanism (preflight)
-app.options("*", cors());
 
 const csrfProtection = csrf({
   cookie: {
