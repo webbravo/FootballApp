@@ -1,6 +1,5 @@
 module.exports = (app, validation, csrfProtection) => {
   const controller = require("./users/users.controller");
-  const cors = require("cors");
 
   app.post("/api/users/login", cors(), controller.authenticate);
 
@@ -8,10 +7,10 @@ module.exports = (app, validation, csrfProtection) => {
   app.post("/api/users/signup", validation.addUser, controller.signup);
 
   //  CSRF Protection
-  // app.use(csrfProtection);
+  app.use(csrfProtection);
 
   //  CSRF Protection
-  app.options("/api/csrf-token", cors());
+
   app.get("/api/csrf-token", cors(), (req, res) => {
     const csrfToken = req.csrfToken();
 
