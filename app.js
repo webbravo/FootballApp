@@ -8,14 +8,8 @@ const cors = require("cors");
 // Initialize Express app
 const app = express();
 
-// Using simple a CORS mechanism
-app.use(
-  cors({
-    origin: "*",
-  })
-);
-
-app.options("*", cors()); // include before other routes
+// Using simple a CORS mechanism (preflight)
+app.options("*", cors());
 
 const csrfProtection = csrf({
   cookie: {
