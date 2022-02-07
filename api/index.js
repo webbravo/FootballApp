@@ -1,7 +1,7 @@
 module.exports = (app, validation, csrfProtection) => {
   const controller = require("./users/users.controller");
 
-  app.post("/api/users/authenticate", controller.authenticate);
+  app.post("/api/users/login", controller.authenticate);
 
   // Create a new users
   app.post("/api/users/signup", validation.addUser, controller.signup);
