@@ -11,7 +11,7 @@ const app = express();
 // Using simple a CORS mechanism
 app.use(
   cors({
-    origin: ["http://127.0.0.1:5000", "https://wepredict.herokuapp.com"],
+    origin: "*",
   })
 );
 
