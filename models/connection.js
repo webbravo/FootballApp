@@ -7,16 +7,16 @@ var db = {};
 // Connect to Remote Mysql Database
 const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 
-sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
-  {
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_POSR,
-  }
-);
+// const sequelize = new Sequelize(
+//   process.env.DB_NAME,
+//   process.env.DB_USER,
+//   process.env.DB_PASS,
+//   {
+//     dialect: process.env.DB_DIALECT,
+//     host: process.env.DB_HOST,
+//     port: process.env.DB_POSR,
+//   }
+// );
 
 // Read all Model file to create various tables
 fs.readdirSync(__dirname)
