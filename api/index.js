@@ -7,12 +7,6 @@ module.exports = (app, validation, csrfProtection) => {
   // Create a new users
   app.post("/api/users/signup", validation.addUser, controller.signup);
 
-  // Set attachUser as Global MiddleWare
-  app.use(attachUser);
-
-  // JWT Auth Middleware to check request
-  app.use(checkJWT);
-
   //  CSRF Protection
   // app.use(csrfProtection);
 
@@ -25,6 +19,12 @@ module.exports = (app, validation, csrfProtection) => {
       csrfToken,
     });
   });
+
+  // Set attachUser as Global MiddleWare
+  app.use(attachUser);
+
+  // JWT Auth Middleware to check request
+  app.use(checkJWT);
 
   //  User Related Routes
   app.use("/api/users", require("./users/users.routes"));
