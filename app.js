@@ -11,6 +11,8 @@ const app = express();
 // Using simple a CORS mechanism
 app.use(cors());
 
+app.options("*", cors()); // include before other routes
+
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
